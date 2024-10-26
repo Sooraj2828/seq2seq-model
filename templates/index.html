@@ -1,0 +1,44 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Translation Model</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 500px; margin: 0 auto; padding: 2rem; }
+        .input-group { margin: 1rem 0; }
+        label { display: block; font-weight: bold; }
+        input, button { padding: 0.5rem; width: 100%; margin-top: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Translate English to Kannada</h2>
+        <div class="input-group">
+            <label for="sentence">Enter Sentence:</label>
+            <input type="text" id="sentence" placeholder="Type something...">
+        </div>
+        <button onclick="translate()">Translate</button>
+        <div class="input-group">
+            <label>Translation:</label>
+            <p id="translation">Translation will appear here</p>
+        </div>
+    </div>
+
+    <script>
+        async function translate() {
+            const sentence = document.getElementById("sentence").value;
+            const response = await fetch('/translate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ sentence })
+            });
+            const data = await response.json();
+            document.getElementById("translation").innerText = data.translation;
+        }
+    </script>
+</body>
+</html>
